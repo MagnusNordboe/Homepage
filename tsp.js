@@ -54,13 +54,33 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-//FINISH THIS
 function calcDistance(arr){
     let distance = 0;
     for (let index = 0; index < arr.length; index++) {
-        const element = arr[index];
-        let a = element.x
-        //distance += 
+        const e1 = arr[index];
+        const e2 = arr[(index + 1) % arr.length];
+        let a = e1.x - e2.x;
+        let b = e1.y - e2.y;
+        distance += Math.hypot(a, b)
+        
     }
+    return distance;
+
 }
+
+function fitness(arr){
+     return arr.map(x => 1 / x);
+}
+
+function mutate(arr){
+    let a, b = getRandomInt()
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+  
+
 window.onload = init;

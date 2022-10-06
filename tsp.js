@@ -1,4 +1,11 @@
 let dots = [];
+let genomes = [];
+//data structure:
+/*[{
+    path: [{x,y},{x,y},{x,y}],
+    fitness: integer
+}]
+*/
 let canvas;
 let ctx;
 function init() {
@@ -13,6 +20,7 @@ function addDot(e) {
     dots.push(getMousePos(document.getElementById("tsp_canvas"), e));
     drawLines();
     drawDots();
+    console.log(dots)
 }
 
 function drawDots() {
@@ -80,6 +88,31 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+}
+
+function getVars(type){
+    if(type == "paths"){
+        let paths = [];
+        genomes.map(x => paths.append(x.path));
+        return paths;
+    }
+    if(type == "fitnesses"){
+        let fits = [];
+        genomes.map(x => fits.append(x.fitness));
+        return fits;
+    }
+}
+
+function newGeneration(pathlist){
+    newGen = [];
+    pathlist.map(x => newGen.append({}))
+}
+
+function genome(pathArray){
+    return {
+        path: pathArray,
+        fitness: fitness(calcDistance(pathArray))
+    }
 }
   
 

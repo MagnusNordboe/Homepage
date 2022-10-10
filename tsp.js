@@ -13,8 +13,16 @@ function init() {
     ctx = canvas.getContext("2d");
     canvas.onclick = addDot;
     document.getElementById("clear").onclick = clearCanvas;
+    document.getElementById("test").onclick = test;
 }
 
+//For testing purposes
+function test(){
+    newGeneration([dots]);
+    console.log(genomes);
+}
+
+//Runs when clicking on the screen
 function addDot(e) {
     console.log(getMousePos(document.getElementById("tsp_canvas"), e));
     dots.push(getMousePos(document.getElementById("tsp_canvas"), e));
@@ -62,6 +70,7 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+//Uses the pythagorean theorem to calculate the euclidean distance between all the points
 function calcDistance(arr){
     let distance = 0;
     for (let index = 0; index < arr.length; index++) {
@@ -72,16 +81,31 @@ function calcDistance(arr){
         distance += Math.hypot(a, b)
         
     }
+    console.log("distance: ", distance)
     return distance;
 
 }
 
-function fitness(arr){
-     return arr.map(x => 1 / x);
+//Very simple fitness function that is inverse of path length. 
+//1000 is arbitrary for a prettier fitness value
+function fitness(distance){
+    return 1000 / distance;
 }
 
+//Input: Single genome array
+//Performs a simple swap mutation, randomly swapping a couple alleles.
 function mutate(arr){
-    let a, b = getRandomInt()
+    let i1 = getRandomInt(0, arr.length);
+    let i2 = getRandomInt(0, arr.length);
+    
+    let placeholder = arr[i1];
+    arr[i1] = arr[i2];
+    arr[i2] = placeholder;
+    return arr;
+}
+
+function crossover(arr1, arr2){
+    
 }
 
 function getRandomInt(min, max) {
@@ -90,24 +114,29 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
 }
 
+//Helper function for filtering out the variables you want from the genomes array
 function getVars(type){
     if(type == "paths"){
         let paths = [];
-        genomes.map(x => paths.append(x.path));
+        genomes.map(x => paths.push(x.path));
         return paths;
     }
     if(type == "fitnesses"){
         let fits = [];
-        genomes.map(x => fits.append(x.fitness));
+        genomes.map(x => fits.push(x.fitness));
         return fits;
     }
 }
 
+//Run the genome function on all paths and update the genomes global variable
+//input: genome data structure with multiple paths
 function newGeneration(pathlist){
     newGen = [];
-    pathlist.map(x => newGen.append({}))
+    pathlist.map(x => newGen.push(genome(x)))
+    genomes = newGen;
 }
 
+//Fit a path to the data structure and append the path's fitness
 function genome(pathArray){
     return {
         path: pathArray,

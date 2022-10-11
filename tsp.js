@@ -20,14 +20,18 @@ function init() {
 //For testing purposes
 function test(){
    // crossover([1,2,3,4,5,6,7,8,9],[9,8,7,6,5,4,3,2,1]);
-   let tes = new Array(3)
-   console.log(tes.includes(undefined));
-   if(tes.some((bruh) => typeof bruh == undefined)){
-    console.log("yes");
-   }
-   else{
-    console.log("no");
-   }
+   let arr1 = [1,2,3,4,5,6,7,8,9];
+   let arr2 = [9,8,7,6,5,4,3,2,1];
+   console.log(crossover(arr1,arr2))
+//    let tes = new Array(3)
+//    console.log(tes.includes(undefined));
+//    if(tes.some((bruh) => typeof bruh == undefined)){
+//     console.log("yes");
+//    }
+//    else{
+//     console.log("no");
+//    }
+
 }
 
 //Runs when clicking on the screen
@@ -122,18 +126,37 @@ function crossover(arr1, arr2){
     let start = points[0];
     let stop = points[1];
 
+ 
     let child1 = new Array(arr1.length);
-    let length = stop - start;
-    child1.splice(start, length, arr1.slice(start, stop));
+    
+    // let length = stop - start;
+    // let slice = arr1.slice(start, stop);
+    // child1.splice(start, length, arr1.slice(start, stop));
+    for(let j = start; j < stop; j++){
+        child1[j] = arr1[j];
+    }
+    console.log(child1)
+   // child1 = child1.flat()
     childIndex = 0;
-    while(child1.includes(undefined)){
-        if(typeof child1[childIndex] === undefined){
+    let arr2Index = 0;
+    while(child1.includes(undefined) && childIndex < 10){
+        console.log(typeof child1[childIndex])
+        if(typeof child1[childIndex] === "undefined"){
+            
+            for(arr2Index; arr2Index<arr2.length; arr2Index++){
+                console.log(arr2[arr2Index])
+                if(!child1.includes(arr2[arr2Index])){
+                    console.log(arr2Index);
+                    child1[childIndex] = arr2[arr2Index];
+                    break;
+                }
 
-            for(let arr2Index = 0; arr2Index<arr1.length*2; arr2Index++){
-                
             }
         }
+        childIndex++;
     }
+    
+    return child1;
 }
 
 function getRandomInt(min, max) {
@@ -173,4 +196,5 @@ function genome(pathArray){
 }
   
 
-window.onload = init;
+//window.onload = init;
+test();

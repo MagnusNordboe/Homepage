@@ -1,3 +1,4 @@
+
 let dots = [];
 let genomes = [];
 //data structure:
@@ -18,8 +19,15 @@ function init() {
 
 //For testing purposes
 function test(){
-    newGeneration([dots]);
-    console.log(genomes);
+   // crossover([1,2,3,4,5,6,7,8,9],[9,8,7,6,5,4,3,2,1]);
+   let tes = new Array(3)
+   console.log(tes.includes(undefined));
+   if(tes.some((bruh) => typeof bruh == undefined)){
+    console.log("yes");
+   }
+   else{
+    console.log("no");
+   }
 }
 
 //Runs when clicking on the screen
@@ -104,8 +112,28 @@ function mutate(arr){
     return arr;
 }
 
+//Order crossover. Copy a random part of genome 1 into a child, then put in the remaining alleles from genome 2 in order. 
 function crossover(arr1, arr2){
-    
+    let points = [
+        getRandomInt(0, arr1.length),
+        getRandomInt(0, arr1.length)
+    ];
+    points.sort();
+    let start = points[0];
+    let stop = points[1];
+
+    let child1 = new Array(arr1.length);
+    let length = stop - start;
+    child1.splice(start, length, arr1.slice(start, stop));
+    childIndex = 0;
+    while(child1.includes(undefined)){
+        if(typeof child1[childIndex] === undefined){
+
+            for(let arr2Index = 0; arr2Index<arr1.length*2; arr2Index++){
+                
+            }
+        }
+    }
 }
 
 function getRandomInt(min, max) {

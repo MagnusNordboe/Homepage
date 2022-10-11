@@ -119,8 +119,8 @@ function mutate(arr){
 //Order crossover. Copy a random part of genome 1 into a child, then put in the remaining alleles from genome 2 in order. 
 function crossover(arr1, arr2){
     let points = [
-        getRandomInt(0, arr1.length),
-        getRandomInt(0, arr1.length)
+        getRandomInt(0, arr1.length - arr1.length / 2),
+        getRandomInt(1, arr1.length)
     ];
     points.sort();
     let start = points[0];
@@ -144,7 +144,6 @@ function crossover(arr1, arr2){
         if(typeof child1[childIndex] === "undefined"){
             
             for(arr2Index; arr2Index<arr2.length; arr2Index++){
-                console.log(arr2[arr2Index])
                 if(!child1.includes(arr2[arr2Index])){
                     console.log(arr2Index);
                     child1[childIndex] = arr2[arr2Index];
@@ -194,6 +193,8 @@ function genome(pathArray){
         fitness: fitness(calcDistance(pathArray))
     }
 }
+
+
   
 
 //window.onload = init;
